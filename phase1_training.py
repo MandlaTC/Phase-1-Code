@@ -1,4 +1,5 @@
 import datetime
+import time
 import os
 import platform
 from model_evaluation_utils import training_evaluation
@@ -6,8 +7,10 @@ from model_utils import create_phase1_model
 from plot_keras_history import show_history, plot_history
 
 phase1_model = create_phase1_model()
-history, phase1_model, results = training_evaluation(phase1_model, 1)
-
+start_time = time.time()
+history, phase1_model, results = training_evaluation(phase1_model, 10)
+end_time = time.time()
+runtime = end_time - start_time
 current_datetime = datetime.datetime.now()
 formatted_datetime = current_datetime.strftime("%Y-%m-%d-%H:%M:%S")
 
@@ -18,9 +21,10 @@ os.makedirs(nested_folder_name, exist_ok=True)
 
 file_path = os.path.join(nested_folder_name, "output.txt")
 with open(file_path, "w") as file:
+    file.write(f"{platform.uname()._asdict()}\n")
+    file.write(f"Runtime: {runtime:.6f} seconds\n")
     file.write(f"{history.history}\n")
     file.write(f"{results}\n")
-    file.write(f"{platform.uname()._asdict()}\n")
 print(results)
 print(history.history)
 plot_history(history, path=f"logs/{formatted_datetime}/history_plot.png")
