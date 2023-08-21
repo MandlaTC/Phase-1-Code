@@ -9,23 +9,25 @@ def init_data_generator():
     )
 
     train_generator = data_generator.flow_from_directory(
-        'train',
+        'dataset/train',
         target_size=(224, 224),
         batch_size=32,
-        class_mode='binary')
+        class_mode='binary',
+        subset='training')
 
     validation_generator = data_generator.flow_from_directory(
-        'train',
+        'dataset/train',
         target_size=(224, 224),
         batch_size=32,
-        class_mode='binary')
+        class_mode='binary',
+        subset='validation')
 
     data_generator = ImageDataGenerator(
         preprocessing_function=preprocess_input,
     )
 
     test_generator = data_generator.flow_from_directory(
-        'train',
+        'dataset/test',
         target_size=(224, 224),
         batch_size=32,
         class_mode='binary')

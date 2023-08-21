@@ -2,7 +2,7 @@
 import tensorflow as tf
 
 
-def create_phase1_model():
+def create_model():
     res = tf.keras.applications.ResNet50(include_top=False, weights='imagenet',
                                          input_shape=(224, 224, 3))
 
